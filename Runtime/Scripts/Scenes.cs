@@ -8,10 +8,16 @@ namespace UnityUtility
 {
     public static class Scenes
     {
+        // EVENTS
+
         public static event Action OnChangeSceneStart;
         public static event Action OnChangeSceneComplete;
 
+        // PROPS
+
         public static int CurrentIndex => SceneManager.GetActiveScene().buildIndex;
+
+        // LOAD by INDEX
 
         public static void LoadNext()
         {
@@ -22,6 +28,31 @@ namespace UnityUtility
 
             if (OnChangeSceneComplete != null)
                 OnChangeSceneComplete();
+        }
+
+        // LOAD by NAME
+
+        public static void Load(string scene_name)
+        {
+            if (OnChangeSceneStart != null)
+                OnChangeSceneStart();
+
+            SceneManager.LoadScene(scene_name);
+
+            if (OnChangeSceneComplete != null)
+                OnChangeSceneComplete();
+        }
+
+        public static AsyncOperation LoadAdditiveAsync(string scene_name)
+        {
+            return SceneManager.LoadSceneAsync(scene_name, LoadSceneMode.Additive);
+        }
+    
+        // UNLOAD
+
+        public static AsyncOperation UnloadCurrent()
+        {
+            return SceneManager.UnloadSceneAsync(CurrentIndex);
         }
     }
 }
