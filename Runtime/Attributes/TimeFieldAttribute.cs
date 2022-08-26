@@ -1,21 +1,22 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace UnityUtility
 {
-    public class TimeAttribute : PropertyAttribute
+    public class TimeFieldAttribute : PropertyAttribute
     {
 
     }
 
 #if UNITY_EDITOR
 
-    [CustomPropertyDrawer(typeof(TimeAttribute))]
-    public class TimeDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(TimeFieldAttribute))]
+    public class TimeFieldDrawer : PropertyDrawer
     {
         public override float GetPropertyHeight(
             SerializedProperty property,

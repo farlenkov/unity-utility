@@ -1,22 +1,22 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using UnityEditor;
-using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace UnityUtility
 {
-    public class DateAttribute : PropertyAttribute
+    public class DateFieldAttribute : PropertyAttribute
     {
 
     }
 
 #if UNITY_EDITOR
 
-    [CustomPropertyDrawer(typeof(DateAttribute))]
-    public class DateDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(DateFieldAttribute))]
+    public class DateFieldDrawer : PropertyDrawer
     {
         public override float GetPropertyHeight(
             SerializedProperty property,
