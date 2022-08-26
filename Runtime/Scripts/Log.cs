@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace UnityUtility
 {
+
+#if UNITY_2017_1_OR_NEWER
+
     public static class Log
     {
         public static void Info(string message, params object[] args)
@@ -25,4 +28,7 @@ namespace UnityUtility
                 Debug.LogFormat(message, args);
         }
     }
+
+#endif
+
 }
