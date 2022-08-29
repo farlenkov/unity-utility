@@ -48,12 +48,12 @@ namespace UnityUtility
             
             var date_format = "dd-MM-yyyy";
             var date_long = property.longValue;
-            var date_in = DateTimeOffset.FromUnixTimeMilliseconds(date_long);
+            var date_in = date_long.ToDate();
 
             var date_str = date_in.ToString(date_format);
             date_str = EditorGUI.TextField(position, label, date_str);
 
-            var is_valid = DateTimeOffset.TryParseExact(
+            var is_valid = DateTime.TryParseExact(
                 date_str,
                 date_format,
                 CultureInfo.InvariantCulture,
@@ -61,7 +61,7 @@ namespace UnityUtility
                 out var date_out);
 
             if (is_valid)
-                property.longValue = date_out.ToUnixTimeMilliseconds();
+                property.longValue = (long)(date_out - DateTime.UnixEpoch).TotalMilliseconds;
         }
     }
 
