@@ -57,11 +57,11 @@ namespace UnityUtility
                 date_str,
                 date_format,
                 CultureInfo.InvariantCulture,
-                DateTimeStyles.AssumeUniversal,
+                DateTimeStyles.AdjustToUniversal,
                 out var date_out);
 
             if (is_valid)
-                property.longValue = (long)(date_out - DateTime.UnixEpoch).TotalMilliseconds;
+                property.longValue = date_out.ToUnixMilliseconds();
         }
     }
 
