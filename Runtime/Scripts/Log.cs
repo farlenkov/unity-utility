@@ -27,6 +27,12 @@ namespace UnityUtility
             if (Application.isEditor)
                 Debug.LogFormat(message, args);
         }
+
+        public static void ErrorEditor(string message, params object[] args)
+        {
+            if (Application.isEditor)
+                Debug.LogErrorFormat(message, args);
+        }
     }
 
 #endif
