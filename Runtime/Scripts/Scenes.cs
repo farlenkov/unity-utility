@@ -60,6 +60,20 @@ namespace UnityUtility
         {
             return SceneManager.UnloadSceneAsync(CurrentIndex);
         }
+
+        // SET ACTIVE
+
+        public static void SetActiveScene(string scene_name)
+        {
+            if (string.IsNullOrEmpty(scene_name))
+                return;
+
+            var scene = SceneManager.GetSceneByName(scene_name);
+
+            if (scene != null)
+                SceneManager.SetActiveScene(scene);
+
+        }
     }
 
 #endif
