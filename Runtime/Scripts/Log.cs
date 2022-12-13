@@ -20,6 +20,11 @@ namespace UnityUtility
             Debug.LogErrorFormat(message, args);
         }
 
+        public static void Exception(Exception ex)
+        {
+            Debug.LogException(ex);
+        }
+
         // EDITOR ONLY      
 
         public static void InfoEditor(string message, params object[] args)
@@ -32,6 +37,12 @@ namespace UnityUtility
         {
             if (Application.isEditor)
                 Debug.LogErrorFormat(message, args);
+        }
+
+        public static void ExceptionEditor(Exception ex)
+        {
+            if (Application.isEditor)
+                Debug.LogException(ex);
         }
     }
 
