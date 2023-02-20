@@ -2,6 +2,9 @@
 
 namespace UnityUtility
 {
+
+#if UNITY_2017_1_OR_NEWER
+
     public class Rotate : MonoBehaviour
     {
         public Vector3 Axis = Vector3.up;
@@ -16,4 +19,7 @@ namespace UnityUtility
                 transform.RotateAround(transform.position, Axis, Time.deltaTime * Speed);
         }
     }
+
+#endif
+
 }
