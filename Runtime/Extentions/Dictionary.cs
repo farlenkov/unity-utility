@@ -33,5 +33,13 @@ namespace UnityUtility
             if (dict.ContainsKey(key))
                 dict.Remove(key);
         }
+
+        public static void Reset<K, V>(ref Dictionary<K, V> dict)
+        {
+            if (dict == null)
+                dict = new Dictionary<K, V>();
+            else
+                dict.Clear();
+        }
     }
 }
