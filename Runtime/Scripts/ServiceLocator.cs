@@ -27,15 +27,32 @@ namespace UnityServiceLocator
             return false;
         }
 
-        public static bool TryAddService<T>(T service)
+        public static bool TryAddService<T>(Type serviceType, T service)
         {
-            var serviceType = typeof(T);
+            if (serviceType == null)
+                return false;
+            
+            if (service == null)
+                return false;
+
+            if(!serviceType.IsAssignableFrom(service.GetType()))
+                return false;
 
             if (Services.ContainsKey(serviceType))
                 return false;
-            
+
             Services.Add(serviceType, service);
             return true;
+        }
+
+        public static bool TryAddService<T>(T service)
+        {
+            if (service == null)
+                return false;
+
+            return TryAddService(
+                service.GetType(), 
+                service);
         }
 
         public static bool TryRemoveService<T>(T service_to_remove)
