@@ -35,5 +35,16 @@ namespace UnityUtility
         {
             return GetRandom<T>(list, out var index, offset);
         }
+
+        public static bool TryRemove<T>(this List<T> list, T item)
+        {
+            var index = list.IndexOf(item);
+
+            if (index < 0)
+                return false;
+
+            list.RemoveAt(index);
+            return true;
+        }
     }
 }
