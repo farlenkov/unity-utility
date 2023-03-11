@@ -5,7 +5,9 @@ namespace UnityUtility
 {
     public static class TaskExt
     {
-        public static async Task<Exception> Catch(this Task task)
+        public static async Task<Exception> Catch(
+            this Task task,
+            bool writeLog = false)
         {
             try
             {
@@ -17,13 +19,18 @@ namespace UnityUtility
             }
             catch (Exception ex)
             {
+                if (writeLog) 
+                    Log.Exception(ex);
+
                 return ex;
             }
 
             return default;
         }
 
-        public static async Task<(T, Exception)> Catch<T>(this Task<T> task)
+        public static async Task<(T, Exception)> Catch<T>(
+            this Task<T> task, 
+            bool writeLog = false)
         {
             try
             {
@@ -35,6 +42,9 @@ namespace UnityUtility
             }
             catch (Exception ex)
             {
+                if (writeLog)
+                    Log.Exception(ex);
+
                 return (default, ex);
             }
 
