@@ -22,6 +22,14 @@ namespace UnityServiceRegistry
                 throw new Exception($"Service '{typeof(INTERFACE).Name}' not found");
         }
 
+        public static INTERFACE GetService<INTERFACE>()
+        {
+            if (TryGetService<INTERFACE>(out var service))
+                return service;
+            else
+                throw new Exception($"Service '{typeof(INTERFACE).Name}' not found");
+        }
+
         public static bool TryGetService<INTERFACE>(out INTERFACE result)
         {
             if (Services.TryGetValue(typeof(INTERFACE), out var service))
