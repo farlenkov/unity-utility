@@ -12,12 +12,18 @@ namespace UnityUtility
     {
         public static void Info(string message, params object[] args)
         {
-            Debug.LogFormat(message, args);
+            if (Application.isEditor)
+                Debug.LogFormat(message, args);
+            else
+                Debug.LogFormat($"{DateTime.UtcNow} {message}", args);
         }
 
         public static void Error(string message, params object[] args)
         {
-            Debug.LogErrorFormat(message, args);
+            if (Application.isEditor)
+                Debug.LogErrorFormat(message, args);
+            else
+                Debug.LogErrorFormat($"{DateTime.UtcNow} {message}", args);
         }
 
         public static void Exception(Exception ex)
