@@ -5,6 +5,8 @@ namespace UnityUtility
 {
     public static class DictionaryExt
     {
+        // GET / SET / REMOVE
+
         public static V GetItem<K, V>(
             this Dictionary<K, V> dict, 
             K key,
@@ -40,6 +42,16 @@ namespace UnityUtility
                 dict = new Dictionary<K, V>();
             else
                 dict.Clear();
+        }
+
+        // CHANGE VALUE
+
+        public static void ChangeItem<K>(this Dictionary<K, int> dict, K key, int changeValue)
+        {
+            if (dict.TryGetValue(key, out var value))
+                dict[key] = value + changeValue;
+            else
+                dict.Add(key, changeValue);
         }
     }
 }
