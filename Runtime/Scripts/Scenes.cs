@@ -25,12 +25,19 @@ namespace UnityUtility
 
         // LOAD by INDEX
 
-        public static void LoadNext()
+        public static void LoadNext(bool writeLog = false)
         {
             if (OnChangeSceneStart != null)
                 OnChangeSceneStart();
 
-            SceneManager.LoadScene(CurrentIndex + 1);
+            var nextIndex = CurrentIndex + 1;
+            SceneManager.LoadScene(nextIndex);
+
+            if (writeLog)
+            {
+                for (var i = 0; i < SceneManager.sceneCount; i++)
+                    Log.Info("[UnityUtility.Scenes: LoadNext] {0} / {1} / {2}", nextIndex, i, SceneManager.GetSceneAt(i).name);
+            }
 
             if (OnChangeSceneComplete != null)
                 OnChangeSceneComplete();
@@ -38,20 +45,20 @@ namespace UnityUtility
 
         // LOAD by NAME
 
-        public static void Load(string scene_name)
+        public static void Load(string sceneName)
         {
             if (OnChangeSceneStart != null)
                 OnChangeSceneStart();
 
-            SceneManager.LoadScene(scene_name);
+            SceneManager.LoadScene(sceneName);
 
             if (OnChangeSceneComplete != null)
                 OnChangeSceneComplete();
         }
 
-        public static AsyncOperation LoadAdditiveAsync(string scene_name)
+        public static AsyncOperation LoadAdditiveAsync(string sceneName)
         {
-            return SceneManager.LoadSceneAsync(scene_name, LoadSceneMode.Additive);
+            return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         }
     
         // UNLOAD
@@ -63,12 +70,12 @@ namespace UnityUtility
 
         // SET ACTIVE
 
-        public static void SetActiveScene(string scene_name)
+        public static void SetActiveScene(string sceneName)
         {
-            if (string.IsNullOrEmpty(scene_name))
+            if (string.IsNullOrEmpty(sceneName))
                 return;
 
-            var scene = SceneManager.GetSceneByName(scene_name);
+            var scene = SceneManager.GetSceneByName(sceneName);
 
             if (scene != null)
                 SceneManager.SetActiveScene(scene);
