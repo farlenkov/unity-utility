@@ -8,12 +8,12 @@ namespace UnityUtility
         // GET / SET / REMOVE
 
         public static V GetItem<K, V>(
-            this Dictionary<K, V> dict, 
+            this Dictionary<K, V> dict,
             K key,
-            bool create_new = true) 
+            bool createNew = true)
             where V : new()
         {
-            if (!dict.TryGetValue(key, out V item) && create_new)
+            if (!dict.TryGetValue(key, out V item) && createNew)
             {
                 item = new V();
                 dict.Add(key, item);

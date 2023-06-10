@@ -52,8 +52,7 @@ namespace UnityServiceRegistry
             if (serviceToAdd == null)
                 return false;
 
-            return TryAddService<IMPLEMENTATION,IMPLEMENTATION>(
-                serviceToAdd);
+            return TryAddService<IMPLEMENTATION, IMPLEMENTATION>(serviceToAdd);
         }
 
         public static bool TryAddService<INTERFACE, IMPLEMENTATION>(IMPLEMENTATION serviceToAdd) where IMPLEMENTATION : INTERFACE
@@ -85,7 +84,7 @@ namespace UnityServiceRegistry
 
         public static bool TryRemoveService<IMPLEMENTATION>(IMPLEMENTATION serviceToRemove)
         {
-            if (serviceToRemove == null) 
+            if (serviceToRemove == null)
                 return false;
 
             return TryRemoveService<IMPLEMENTATION, IMPLEMENTATION>(serviceToRemove);

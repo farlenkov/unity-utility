@@ -30,22 +30,22 @@ namespace UnityUtility
             SerializedProperty property,
             GUIContent label)
         {
-            var time_format = @"hh\:mm";
-            var time_double = property.doubleValue;
-            var time_in = TimeSpan.FromMinutes(time_double);
+            var timeFormat = @"hh\:mm";
+            var timeDouble = property.doubleValue;
+            var timeIn = TimeSpan.FromMinutes(timeDouble);
 
-            var time_str = time_in.ToString(time_format);
-            time_str = EditorGUI.TextField(position, label, time_str);
+            var timeStr = timeIn.ToString(timeFormat);
+            timeStr = EditorGUI.TextField(position, label, timeStr);
 
-            var is_valid = TimeSpan.TryParseExact(
-                time_str,
-                time_format,
+            var isValid = TimeSpan.TryParseExact(
+                timeStr,
+                timeFormat,
                 CultureInfo.InvariantCulture,
                 TimeSpanStyles.None,
-                out var time_out);
+                out var timeOut);
 
-            if (is_valid)
-                property.doubleValue = time_out.TotalMinutes;
+            if (isValid)
+                property.doubleValue = timeOut.TotalMinutes;
         }
     }
 

@@ -11,7 +11,7 @@ namespace UnityUtility
     public class InspectorsWindow : EditorWindow
     {
         ObjectNameComparer comparer;
-        GUIStyle name_style;
+        GUIStyle nameStyle;
         Object[] Selected;
         Vector2 scroll;
 
@@ -53,13 +53,13 @@ namespace UnityUtility
 
         void DrawInspectors()
         {
-            if (name_style == null)
+            if (nameStyle == null)
             {
-                name_style = new GUIStyle(EditorStyles.centeredGreyMiniLabel);
-                name_style.fixedHeight = 24;
-                name_style.fontSize = 12;
-                name_style.fontStyle = FontStyle.Bold;
-                name_style.normal.textColor = Color.yellow;
+                nameStyle = new GUIStyle(EditorStyles.centeredGreyMiniLabel);
+                nameStyle.fixedHeight = 24;
+                nameStyle.fontSize = 12;
+                nameStyle.fontStyle = FontStyle.Bold;
+                nameStyle.normal.textColor = Color.yellow;
             }
 
             // HEADER

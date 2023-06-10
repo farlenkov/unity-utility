@@ -34,7 +34,7 @@ namespace UnityUtility
             {
                 var color = GUI.contentColor;
                 GUI.contentColor = new Color(1f, 1f, 1f, 0.5f);
-                EditorGUI.TextField(position, label, EditorGUIUtility.TrTextContent("—", "Mixed Values").text);
+                EditorGUI.TextField(position, label, EditorGUIUtility.TrTextContent("ï¿½", "Mixed Values").text);
                 //EditorGUI.PropertyField(position, property, label, true);
 
                 //GUI.changed = false;
@@ -45,22 +45,22 @@ namespace UnityUtility
                 GUI.contentColor = color;
                 return;
             }
-            
-            var date_format = "dd-MM-yyyy";
-            var date_long = property.longValue;
-            var date_in = date_long.ToDate();
 
-            var date_str = date_in.ToString(date_format);
-            date_str = EditorGUI.TextField(position, label, date_str);
+            var dateFormat = "dd-MM-yyyy";
+            var dateLong = property.longValue;
+            var dateIn = dateLong.ToDate();
 
-            var is_valid = DateTime.TryParseExact(
-                date_str,
-                date_format,
+            var dateStr = dateIn.ToString(dateFormat);
+            dateStr = EditorGUI.TextField(position, label, dateStr);
+
+            var isValid = DateTime.TryParseExact(
+                dateStr,
+                dateFormat,
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.AdjustToUniversal,
                 out var date_out);
 
-            if (is_valid)
+            if (isValid)
                 property.longValue = date_out.ToUnixMilliseconds();
         }
     }

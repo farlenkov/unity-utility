@@ -25,11 +25,11 @@ namespace UnityUtility
 
                 var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
 
-                using (MemoryStream memoryStream = new MemoryStream())
+                using (var memoryStream = new MemoryStream())
                 {
-                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, encryptor, CryptoStreamMode.Write))
+                    using (var cryptoStream = new CryptoStream((Stream)memoryStream, encryptor, CryptoStreamMode.Write))
                     {
-                        using (StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream))
+                        using (var streamWriter = new StreamWriter((Stream)cryptoStream))
                         {
                             streamWriter.Write(data);
                         }
@@ -55,11 +55,11 @@ namespace UnityUtility
 
                 var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
-                using (MemoryStream memoryStream = new MemoryStream(buffer))
+                using (var memoryStream = new MemoryStream(buffer))
                 {
-                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, decryptor, CryptoStreamMode.Read))
+                    using (var cryptoStream = new CryptoStream((Stream)memoryStream, decryptor, CryptoStreamMode.Read))
                     {
-                        using (StreamReader streamReader = new StreamReader((Stream)cryptoStream))
+                        using (var streamReader = new StreamReader((Stream)cryptoStream))
                         {
                             return streamReader.ReadToEnd();
                         }

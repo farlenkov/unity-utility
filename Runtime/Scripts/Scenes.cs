@@ -60,7 +60,7 @@ namespace UnityUtility
         {
             return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         }
-    
+
         // UNLOAD
 
         public static AsyncOperation UnloadCurrent()
@@ -79,7 +79,6 @@ namespace UnityUtility
 
             if (scene != null)
                 SceneManager.SetActiveScene(scene);
-
         }
     }
 
