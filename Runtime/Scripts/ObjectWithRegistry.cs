@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace UnityUtility
 {
+
+#if UNITY_2017_1_OR_NEWER
+
     public abstract class ObjectWithRegistry<T> : MonoBehaviour
         where T : ObjectWithRegistry<T>
     {
@@ -22,4 +25,7 @@ namespace UnityUtility
                 Registry.RemoveAt(index);
         }
     }
+
+#endif
+
 }
