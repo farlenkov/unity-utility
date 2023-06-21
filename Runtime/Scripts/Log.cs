@@ -10,6 +10,14 @@ namespace UnityUtility
 
     public static class Log
     {
+        public static void Info(string message)
+        {
+            if (Application.isEditor)
+                Debug.Log(message);
+            else
+                Debug.Log($"{DateTime.UtcNow} {message}");
+        }
+
         public static void Info(string message, params object[] args)
         {
             if (Application.isEditor)
