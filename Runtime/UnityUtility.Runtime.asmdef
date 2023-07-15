@@ -1,5 +1,5 @@
 {
-    "name": "Game.Utility.Runtime",
+    "name": "UnityUtility.Runtime",
     "rootNamespace": "UnityUtility",
     "references": [],
     "includePlatforms": [],
