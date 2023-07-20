@@ -19,7 +19,30 @@ namespace UnityUtility
             }
             catch (Exception ex)
             {
-                if (writeLog) 
+                if (writeLog)
+                    Log.Exception(ex);
+
+                return ex;
+            }
+
+            return default;
+        }
+
+        public static async ValueTask<Exception> Catch(
+            this ValueTask task,
+            bool writeLog = false)
+        {
+            try
+            {
+                await task;
+            }
+            catch (OperationCanceledException)
+            {
+                // nothing
+            }
+            catch (Exception ex)
+            {
+                if (writeLog)
                     Log.Exception(ex);
 
                 return ex;
@@ -29,7 +52,7 @@ namespace UnityUtility
         }
 
         public static async Task<(T, Exception)> Catch<T>(
-            this Task<T> task, 
+            this Task<T> task,
             bool writeLog = false)
         {
             try
