@@ -58,6 +58,12 @@ namespace UnityUtility
             if (Application.isEditor)
                 Debug.LogException(ex);
         }
+
+        public static void WarningEditor(string message, params object[] args)
+        {
+            if (Application.isEditor)
+                Debug.LogWarningFormat(message, args);
+        }
     }
 
 #endif
