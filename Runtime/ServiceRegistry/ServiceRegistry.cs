@@ -8,9 +8,9 @@ namespace UnityServiceRegistry
 {
     public static class ServiceRegistry
     {
-        static Dictionary<Type, object> Services = new Dictionary<Type, object>();
-        static Dictionary<Type, List<object>> ServiceAddListners = new Dictionary<Type, List<object>>();
-        static Dictionary<Type, List<object>> ServiceRemoveListners = new Dictionary<Type, List<object>>();
+        static Dictionary<Type, object> Services = new();
+        static Dictionary<Type, List<object>> ServiceAddListners = new();
+        static Dictionary<Type, List<object>> ServiceRemoveListners = new();
 
         // SERVICES - GET
 
