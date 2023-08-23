@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityUtility;
 
 namespace UnityObjectRegistry
 {
@@ -12,7 +13,7 @@ namespace UnityObjectRegistry
 
         // GET
 
-        public bool TryGetAll<TYPE>(out IReadOnlyList<TYPE> result) //where TYPE : MonoBehaviour
+        public bool TryGetAll<TYPE>(out IReadOnlyList<TYPE> result)
         {
             if (!Objects.TryGetValue(typeof(TYPE), out var objects))
             {
@@ -20,31 +21,39 @@ namespace UnityObjectRegistry
                 return false;
             }
 
+            // Log.InfoEditor(
+            //     "[ObjectRegistry: TryGetAll] {0} {1}",
+            //     typeof(TYPE),
+            //     objects.GetObjectType().Name);
+
             result = (objects as ObjectList<TYPE>).All;
             return true;
         }
 
-        public bool TryGetNew<TYPE>(out IReadOnlyList<TYPE> result) //where TYPE : MonoBehaviour
+        public bool TryGetNew<TYPE>(out IReadOnlyList<TYPE> result)
         {
-            if (Objects.TryGetValue(typeof(TYPE), out var objects))
+            if (!Objects.TryGetValue(typeof(TYPE), out var objects))
             {
                 result = default;
                 return false;
             }
 
             result = (objects as ObjectList<TYPE>).New;
+
+            // Log.InfoEditor(
+            //     "[ObjectRegistry: TryGetNew] {0} {1}",
+            //     typeof(TYPE),
+            //     result.Count);
+
             return true;
         }
 
         // ADD
 
-        public void Add<TYPE>(TYPE theObject) where TYPE : MonoBehaviour
+        public void Add<TYPE>(TYPE theObject)
         {
-            Add(theObject, theObject.GetType());
-        }
+            var type = typeof(TYPE);
 
-        public void Add<TYPE>(TYPE theObject, Type type) //where TYPE : MonoBehaviour
-        {
             if (!Objects.TryGetValue(type, out var objects))
             {
                 objects = new ObjectList<TYPE>();
@@ -55,19 +64,26 @@ namespace UnityObjectRegistry
 
             if (!NewTypes.Contains(type))
                 NewTypes.Add(type);
+
+            // Log.InfoEditor(
+            //     "[ObjectRegistry: Add] {0} {1}",
+            //     type.Name,
+            //     theObject is MonoBehaviour
+            //         ? (theObject as MonoBehaviour).gameObject.name
+            //         : theObject.GetType().Name);
         }
 
         // REMOVE
 
-        public void Remove<TYPE>(TYPE theObject) //where TYPE : MonoBehaviour
+        public void Remove<TYPE>(TYPE theObject)
         {
             Remove(theObject, theObject.GetType());
         }
 
-        public void Remove<TYPE>(TYPE theObject, Type type) //where TYPE : MonoBehaviour
+        public void Remove<TYPE>(TYPE theObject, Type type)
         {
             if (Objects.TryGetValue(type, out var objects))
-                (objects as ObjectList<TYPE>).Remove(theObject);
+                objects.Remove(theObject);
         }
 
         public void ClearNew()

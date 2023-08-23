@@ -7,10 +7,11 @@ namespace UnityObjectRegistry
 {
     internal abstract class ObjectList
     {
-        public abstract void ClearNew();
+        internal abstract void ClearNew();
+        internal abstract void Remove(object theObject);
     }
 
-    internal class ObjectList<TYPE> : ObjectList // where TYPE : MonoBehaviour
+    internal class ObjectList<TYPE> : ObjectList
     {
         List<TYPE> allObjects = new();
         List<TYPE> newObjects = new();
@@ -24,10 +25,11 @@ namespace UnityObjectRegistry
             newObjects.Add(theObject);
         }
 
-        public void Remove(TYPE theObject)
+        internal override void Remove(object theObject)
         {
-            var allIndex = allObjects.IndexOf(theObject);
-            var newIndex = newObjects.IndexOf(theObject);
+            var typedObject = (TYPE)theObject;
+            var allIndex = allObjects.IndexOf(typedObject);
+            var newIndex = newObjects.IndexOf(typedObject);
 
             if (allIndex >= 0)
                 allObjects.RemoveAt(allIndex);
@@ -36,7 +38,7 @@ namespace UnityObjectRegistry
                 newObjects.RemoveAt(newIndex);
         }
 
-        public override void ClearNew()
+        internal override void ClearNew()
         {
             newObjects.Clear();
         }
