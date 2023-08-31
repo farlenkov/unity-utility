@@ -52,8 +52,11 @@ namespace UnityObjectRegistry
 
         public void Add<TYPE>(TYPE theObject)
         {
-            var type = typeof(TYPE);
+            Add(theObject, typeof(TYPE));
+        }
 
+        public void Add<TYPE>(TYPE theObject, Type type)
+        {
             if (!Objects.TryGetValue(type, out var objects))
             {
                 objects = new ObjectList<TYPE>();
