@@ -80,7 +80,7 @@ namespace UnityObjectRegistry
 
         public void Remove<TYPE>(TYPE theObject)
         {
-            Remove(theObject, theObject.GetType());
+            Remove(theObject, typeof(TYPE));
         }
 
         public void Remove<TYPE>(TYPE theObject, Type type)
