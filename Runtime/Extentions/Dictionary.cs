@@ -46,12 +46,19 @@ namespace UnityUtility
 
         // CHANGE VALUE
 
-        public static void ChangeItem<K>(this Dictionary<K, int> dict, K key, int changeValue)
+        public static int ChangeItem<K>(this Dictionary<K, int> dict, K key, int changeValue)
         {
             if (dict.TryGetValue(key, out var value))
-                dict[key] = value + changeValue;
+            {
+                var newValue = value + changeValue;
+                dict[key] = newValue;
+                return newValue;
+            }
             else
+            {
                 dict.Add(key, changeValue);
+                return changeValue;
+            }
         }
     }
 }
