@@ -1,7 +1,9 @@
 {
     "name": "UnityUtility.Runtime",
     "rootNamespace": "UnityUtility",
-    "references": [],
+    "references": [
+        "UniTask"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
