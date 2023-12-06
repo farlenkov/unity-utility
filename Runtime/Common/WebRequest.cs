@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace UnityUtility
@@ -19,12 +20,12 @@ namespace UnityUtility
         public static async UniTask<RESP> Get<RESP>(string url)
         {
             var json = await Get(url);
-            return JsonUtility.FromJson<RESP>(json);
+            return JsonConvert.DeserializeObject<RESP>(json);
         }
 
         public static async UniTask<string> Post<REQ>(string url, REQ request)
         {
-            var requestString = JsonUtility.ToJson(request);
+            var requestString = JsonConvert.SerializeObject(request);
 
             using (var req = UnityEngine.Networking.UnityWebRequest.Post(url, requestString, "application/json"))
             {
@@ -36,7 +37,7 @@ namespace UnityUtility
         public static async UniTask<RESP> Post<REQ, RESP>(string url, REQ request)
         {
             var json = await Post(url, request);
-            return JsonUtility.FromJson<RESP>(json);
+            return JsonConvert.DeserializeObject<RESP>(json);
         }
     }
 }

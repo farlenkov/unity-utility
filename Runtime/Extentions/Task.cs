@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 namespace UnityUtility
 {
@@ -53,6 +54,29 @@ namespace UnityUtility
 
         public static async Task<(T, Exception)> Catch<T>(
             this Task<T> task,
+            bool writeLog = false)
+        {
+            try
+            {
+                return (await task, default);
+            }
+            catch (OperationCanceledException)
+            {
+                // nothing
+            }
+            catch (Exception ex)
+            {
+                if (writeLog)
+                    Log.Exception(ex);
+
+                return (default, ex);
+            }
+
+            return (default, default);
+        }
+
+        public static async UniTask<(T, Exception)> Catch<T>(
+            this UniTask<T> task,
             bool writeLog = false)
         {
             try
