@@ -1,6 +1,9 @@
 using System;
 using System.Threading.Tasks;
+
+#if UNITY_2017_1_OR_NEWER
 using Cysharp.Threading.Tasks;
+#endif
 
 namespace UnityUtility
 {
@@ -75,6 +78,8 @@ namespace UnityUtility
             return (default, default);
         }
 
+#if UNITY_2017_1_OR_NEWER
+
         public static async UniTask<(T, Exception)> Catch<T>(
             this UniTask<T> task,
             bool writeLog = false)
@@ -97,5 +102,7 @@ namespace UnityUtility
 
             return (default, default);
         }
+
+#endif
     }
 }
