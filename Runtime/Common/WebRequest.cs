@@ -25,11 +25,11 @@ namespace UnityUtility
             return JsonConvert.DeserializeObject<RESP>(json);
         }
 
-        public static async UniTask<string> Post<REQ>(string url, REQ request)
+        public static async UniTask<string> Post<REQ>(string url, REQ request, string contentType = "application/json")
         {
             var requestString = JsonConvert.SerializeObject(request);
 
-            using (var req = UnityEngine.Networking.UnityWebRequest.Post(url, requestString, "application/json"))
+            using (var req = UnityEngine.Networking.UnityWebRequest.Post(url, requestString, contentType))
             {
                 await req.SendWebRequest();
                 return req.downloadHandler.text;
