@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+#if UNITY_2017_1_OR_NEWER
+
 using UnityEngine;
 
 namespace AssetIndex
@@ -7,6 +7,7 @@ namespace AssetIndex
     [CreateAssetMenu]
     public class SpriteIndex : AssetIndex<Sprite, SpriteIndex>
     {
+
 #if UNITY_EDITOR
 
         [ContextMenu("Refresh")]
@@ -16,5 +17,8 @@ namespace AssetIndex
         }
 
 #endif
+
     }
 }
+
+#endif
