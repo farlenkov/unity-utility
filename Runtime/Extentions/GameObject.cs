@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UnityUtility
 {
@@ -20,7 +21,7 @@ namespace UnityUtility
                     gameObject.SetActive(value);
             }
         }
-        
+
         public static void SetActive(this List<GameObject> gameObjects, bool value)
         {
             var count = gameObjects.Count;
@@ -32,6 +33,11 @@ namespace UnityUtility
                 if (gameObject != null)
                     gameObject.SetActive(value);
             }
+        }
+
+        public static bool InLayers(this GameObject gameObject, LayerMask layerMask)
+        {
+            return layerMask == (layerMask | (1 << gameObject.layer));
         }
     }
 }
