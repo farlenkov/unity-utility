@@ -1,9 +1,7 @@
 #if UNITY_2017_1_OR_NEWER
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UnityUtility
 {
@@ -38,6 +36,17 @@ namespace UnityUtility
         public static bool InLayers(this GameObject gameObject, LayerMask layerMask)
         {
             return layerMask == (layerMask | (1 << gameObject.layer));
+        }
+
+        public static string GetRootName(this GameObject gameObject)
+        {
+            if (!string.IsNullOrEmpty(gameObject.scene.name))
+                return gameObject.scene.name;
+
+            if (gameObject.transform.parent != null)
+                return gameObject.transform.parent.gameObject.GetRootName();
+
+            return gameObject.name;
         }
     }
 }
