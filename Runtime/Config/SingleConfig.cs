@@ -1,28 +1,23 @@
 #if UNITY_2017_1_OR_NEWER
 
 using UnityEngine;
+using UnityUtility;
 
 namespace UnityConfig
 {
-    public abstract class SingleConfig<T> 
-        : ScriptableObject where T : SingleConfig<T>
+    public abstract class SingleConfig<T> : ScriptableObject where T : SingleConfig<T>
     {
-        static T instance;
-        
-        public static T Instance
+        public static T Load()
         {
-            get
-            {
-                if (instance == null)
-                {
-                    var all = Resources.LoadAll<T>(string.Empty);
+            var configs = Resources.LoadAll<T>("");
 
-                    if (all.Length > 0)
-                        instance = all[0];
-                }
+            if (configs.Length == 0)
+                return null;
 
-                return instance;
-            }
+            if (configs.Length > 1)
+                Log.WarningEditor($"[{typeof(T).Name}: Load] More than one config found");
+
+            return configs[0];
         }
     }
 }
