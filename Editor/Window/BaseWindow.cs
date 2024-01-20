@@ -55,5 +55,51 @@ namespace UnityUtility
                 GUILayout.EndHorizontal();
             };
         }
+
+        // SCROLL
+
+        Queue<Vector2> ScrollQueue = new ();
+
+        protected void Scroll(Action callback)
+        {
+            var scroll = ScrollQueue.Count == 0
+                ? Vector2.zero
+                : ScrollQueue.Dequeue();
+
+            scroll = EditorGUILayout.BeginScrollView(scroll);
+
+            callback();
+
+            ScrollQueue.Enqueue(scroll);
+            EditorGUILayout.EndScrollView();
+        }
+
+        protected void VerticalScroll(Action callback)
+        {
+            Scroll(() => 
+            {
+                Vertical(() =>
+                {
+                    callback();
+                });
+            });
+        }
+
+        // BUTTON
+
+        public static bool Button(string name, float width = 0)
+        {
+            if (width == 0)
+                return GUILayout.Button(name);
+            else
+                return GUILayout.Button(name, GUILayout.Width(width));
+        }
+
+        // STYLE
+
+        public static void ButtonAlignment(TextAnchor alignment)
+        {
+            GUI.skin.button.alignment = alignment;
+        }
     }
 }

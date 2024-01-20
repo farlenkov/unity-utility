@@ -2,6 +2,7 @@
 
 using System.IO;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 namespace UnityUtility
 {
@@ -15,6 +16,18 @@ namespace UnityUtility
             var scenePath = AssetDatabase.GetAssetPath(sceneAsset);
             var sceneName = Path.GetFileNameWithoutExtension(scenePath);
             return sceneName;
+        }
+
+        public static void OpenSingle(this SceneAsset sceneAsset)
+        {
+            var scenePath = AssetDatabase.GetAssetPath(sceneAsset);
+            EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+        }
+
+        public static void OpenAdditive(this SceneAsset sceneAsset)
+        {
+            var scenePath = AssetDatabase.GetAssetPath(sceneAsset);
+            EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
         }
     }
 }
