@@ -10,9 +10,9 @@ namespace AssetIndex
 {
     public abstract class AssetIndex : ScriptableObject
     {
-        protected abstract void Refresh();
-
 #if UNITY_EDITOR
+
+        protected abstract void Refresh();
 
         [UnityEditor.MenuItem("Assets/Refresh Asset Indexes")]
         static void RefreshAll()
