@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 
+#if !UNITY_2017_1_OR_NEWER
+using System.Net.Http.Json;
+#endif
+
 namespace UnityUtility
 {
     public class WebRequest
@@ -33,7 +37,7 @@ namespace UnityUtility
 
         public static async UniTask<string> Get(string url)
         {
-            using (var client = new HttpClient())
+            using (var client = new System.Net.Http.HttpClient())
             {
                 var resp = await client.GetAsync(url);
 
@@ -54,7 +58,7 @@ namespace UnityUtility
         {
             var requestString = JsonConvert.SerializeObject(request);
 
-            using (var client = new HttpClient())
+            using (var client = new System.Net.Http.HttpClient())
             {
                 var resp = await client.PostAsJsonAsync(url, requestString);
 
