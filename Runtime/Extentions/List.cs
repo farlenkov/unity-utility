@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace UnityUtility
@@ -24,9 +23,9 @@ namespace UnityUtility
                 return list[0];
             }
             else
-            {                
+            {
                 // TODO: check offset is in range 0..list.Count
-                index = random.Next(offset, list.Count); 
+                index = random.Next(offset, list.Count);
                 return list[index];
             }
         }
@@ -45,6 +44,39 @@ namespace UnityUtility
 
             list.RemoveAt(index);
             return true;
+        }
+
+        public static bool TryGet<T>(this IList<T> list, int index, out T result)
+        {
+            if (list == null)
+            {
+                result = default;
+                return false;
+            }
+
+            if (list.Count <= index)
+            {
+                result = default;
+                return false;
+            }
+
+            var value = list[index];
+
+            if (value is string valueStr &&
+                string.IsNullOrEmpty(valueStr))
+            {
+                result = default;
+                return false;
+            }
+
+            result = value;
+            return true;
+        }
+
+        public static T Get<T>(this IList<T> list, int index)
+        {
+            list.TryGet(index, out var result);
+            return result;
         }
     }
 }
