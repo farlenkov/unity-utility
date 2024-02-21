@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
-
-#if !UNITY_2017_1_OR_NEWER
-using System.Net.Http.Json;
-#endif
 
 namespace UnityUtility
 {
@@ -23,7 +17,10 @@ namespace UnityUtility
             }
         }
 
-        public static async UniTask<string> Post<REQ>(string url, REQ request, string contentType = "application/json")
+        public static async UniTask<string> Post<REQ>(
+            string url, 
+            REQ request, 
+            string contentType = "application/json")
         {
             var requestString = JsonConvert.SerializeObject(request);
 
@@ -54,13 +51,23 @@ namespace UnityUtility
             }
         }
 
-        public static async UniTask<string> Post<REQ>(string url, REQ request, string contentType = "application/json")
+        public static async UniTask<string> Post<REQ>(
+            string url, 
+            REQ bodyData, 
+            string contentType = "application/json")
         {
-            var requestString = JsonConvert.SerializeObject(request);
+            var body = bodyData is string bodyStr
+                ? bodyStr
+                : JsonConvert.SerializeObject(bodyData);
 
             using (var client = new System.Net.Http.HttpClient())
             {
-                var resp = await client.PostAsJsonAsync(url, requestString);
+                var httpContent = new System.Net.Http.StringContent(
+                    body,
+                    System.Text.Encoding.UTF8,
+                    contentType);
+
+                var resp = await client.PostAsync(url, httpContent);
 
                 if (resp.IsSuccessStatusCode)
                 {
