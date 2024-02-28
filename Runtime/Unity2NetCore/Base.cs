@@ -12,5 +12,17 @@ namespace UnityEngine
         public string name;
     }
 
+    public struct Vector2
+    {
+        public float x;
+        public float y;
+
+        public Vector2(float x, float y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
 #endif
 }
