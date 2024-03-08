@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using System;
 
 namespace UnityUtility
 {
@@ -84,10 +85,23 @@ namespace UnityUtility
 
 #endif
 
-        public static async UniTask<RESP> Get<RESP>(string url)
+        public static async UniTask<RESP> Get<RESP>(string url, bool tryCatch = false)
         {
             var json = await Get(url);
-            return JsonConvert.DeserializeObject<RESP>(json);
+
+            if (!tryCatch)
+                return JsonConvert.DeserializeObject<RESP>(json);
+
+            try
+            {
+                return JsonConvert.DeserializeObject<RESP>(json);
+            }
+            catch (Exception ex)
+            {
+                Log.Exception(ex);
+                Log.Error("[WebRequest: Get] {0}\nResponse: {1}", url, json);
+                return default;
+            }
         }
 
         public static async UniTask<RESP> Post<REQ, RESP>(string url, REQ request)
