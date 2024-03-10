@@ -7,20 +7,7 @@ namespace UnityUtility
 {
     public static class GameObjectExt
     {
-        public static void SetActive(this GameObject[] gameObjects, bool value)
-        {
-            var count = gameObjects.Length;
-
-            for (var i = 0; i < count; i++)
-            {
-                var gameObject = gameObjects[i];
-
-                if (gameObject != null)
-                    gameObject.SetActive(value);
-            }
-        }
-
-        public static void SetActive(this List<GameObject> gameObjects, bool value)
+        public static void SetActive(this IList<GameObject> gameObjects, bool value)
         {
             var count = gameObjects.Count;
 
@@ -31,6 +18,22 @@ namespace UnityUtility
                 if (gameObject != null)
                     gameObject.SetActive(value);
             }
+        }
+
+        public static void Destroy(this IList<GameObject> gameObjects, bool clear = true)
+        {
+            var count = gameObjects.Count;
+
+            for (var i = 0; i < count; i++)
+            {
+                var gameObject = gameObjects[i];
+
+                if (gameObject != null)
+                    UnityEngine.Object.Destroy(gameObject);
+            }
+
+            if (clear)
+                gameObjects.Clear();
         }
 
         public static bool InLayers(this GameObject gameObject, LayerMask layerMask)
