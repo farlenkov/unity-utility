@@ -1,10 +1,10 @@
 
+#if !UNITY_2017_1_OR_NEWER
+
 using System;
 
 namespace UnityEngine
 {
-#if !UNITY_2017_1_OR_NEWER
-
     [AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
     public abstract class PropertyAttribute : Attribute { }
 
@@ -53,6 +53,11 @@ namespace UnityEngine
         public string fileName;
         public string menuName;
     }
+}
+
+namespace UnityEngine.Scripting
+{
+    public class PreserveAttribute : Attribute { }
+}
 
 #endif
-}
