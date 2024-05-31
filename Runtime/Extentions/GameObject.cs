@@ -19,6 +19,19 @@ namespace UnityUtility
                     gameObject.SetActive(value);
             }
         }
+        
+        public static void SetActive(this IList<Component> gameObjects, bool value)
+        {
+            var count = gameObjects.Count;
+
+            for (var i = 0; i < count; i++)
+            {
+                var gameObject = gameObjects[i];
+
+                if (gameObject != null)
+                    gameObject.gameObject.SetActive(value);
+            }
+        }
 
         public static void Destroy(this IList<GameObject> gameObjects, bool clear = true)
         {
