@@ -6,12 +6,12 @@ namespace UnityUtility
 {
     public static class JSON
     {
-        public static T Read<T>(string json)
+        public static T parse<T>(string json)
         {
             return JsonConvert.DeserializeObject<T>(json);
         }
 
-        public static string Write<T>(T obj, bool formatting = false)
+        public static string stringify<T>(T obj, bool formatting = false)
         {
             return JsonConvert.SerializeObject(obj, formatting ? Formatting.Indented : Formatting.None);
         }
