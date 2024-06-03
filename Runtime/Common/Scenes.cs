@@ -25,6 +25,17 @@ namespace UnityUtility
 
         // LOAD by INDEX
 
+        public static void LoadFirst()
+        {
+            if (OnChangeSceneStart != null)
+                OnChangeSceneStart();
+
+            SceneManager.LoadScene(0);
+
+            if (OnChangeSceneComplete != null)
+                OnChangeSceneComplete();
+        }
+
         public static void LoadNext(bool writeLog = false)
         {
             if (OnChangeSceneStart != null)
