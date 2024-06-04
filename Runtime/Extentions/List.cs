@@ -78,5 +78,12 @@ namespace UnityUtility
             list.TryGet(index, out var result);
             return result;
         }
+    
+        public static T Pool<T>(this IList<T> list, int index)
+        {
+            var item = list[index];
+            list.RemoveAt(index);
+            return item;
+        }
     }
 }
