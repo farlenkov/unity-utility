@@ -10,5 +10,13 @@ namespace UnityUtility
         {
             return value.ToString("#,#").Replace(',', ' ');
         }
+
+        public static string ToStringWithSign(this int value)
+        {
+            if (value > 0)
+                return $"+{value}";
+            else 
+                return value.ToString();
+        }
     }
 }
