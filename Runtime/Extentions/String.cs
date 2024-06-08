@@ -67,5 +67,29 @@ namespace UnityUtility
                 }
             }
         }
+    
+        public static string ToBase64(this string originalString, bool skipEmpty = true)
+        {
+            if (originalString == null)
+                return null;
+
+            if (skipEmpty && string.IsNullOrEmpty(originalString)) // ??
+                return originalString;
+
+            var bytesToEncode = Encoding.UTF8.GetBytes(originalString);
+            return Convert.ToBase64String(bytesToEncode);
+        }
+
+        public static string FromBase64(this string base64String, bool skipEmpty = true)
+        {
+            if (base64String == null)
+                return null;
+
+            if (skipEmpty && string.IsNullOrEmpty(base64String)) // ??
+                return base64String;
+
+            var bytes = Convert.FromBase64String(base64String);
+            return Encoding.UTF8.GetString(bytes);
+        }
     }
 }
