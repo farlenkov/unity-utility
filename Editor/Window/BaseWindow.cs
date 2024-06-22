@@ -101,5 +101,14 @@ namespace UnityUtility
         {
             GUI.skin.button.alignment = alignment;
         }
+
+        // CHANGE CHECK
+
+        public static bool ChangeCheck(Action callback1)
+        {
+            EditorGUI.BeginChangeCheck();
+            callback1();
+            return EditorGUI.EndChangeCheck();
+        }
     }
 }
