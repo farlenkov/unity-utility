@@ -21,6 +21,9 @@ namespace UnityEngine
     public class HeaderAttribute : Attribute { public HeaderAttribute(string text) { } }
 
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true)]
+    public class MultilineAttribute : Attribute { }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true)]
     public class TextAreaAttribute : Attribute
     {
         public TextAreaAttribute() { }
