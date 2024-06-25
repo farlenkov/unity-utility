@@ -110,5 +110,12 @@ namespace UnityUtility
             callback1();
             return EditorGUI.EndChangeCheck();
         }
+
+        // DIRTY
+
+        public static void SetDirty(UnityEngine.Object target)
+        {
+            EditorUtility.SetDirty(target);
+        }
     }
 }
