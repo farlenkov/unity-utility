@@ -8,6 +8,11 @@ namespace UnityUtility
     {
         public int Compare(ScriptableObject x, ScriptableObject y)
         {
+            return CompareObjects(x, y);
+        }
+
+        public static int CompareObjects(ScriptableObject x, ScriptableObject y)
+        {
             if (x == null && 
                 y == null)
                 return 0;
@@ -20,5 +25,5 @@ namespace UnityUtility
 
             return x.name.CompareTo(y.name);
         }
-    }
+    }    
 }

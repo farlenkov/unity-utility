@@ -117,5 +117,10 @@ namespace UnityUtility
         {
             EditorUtility.SetDirty(target);
         }
+        
+        public static bool IsDirty(UnityEngine.Object target)
+        {
+            return EditorUtility.IsDirty(target);
+        }
     }
 }
