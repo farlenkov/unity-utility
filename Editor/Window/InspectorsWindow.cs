@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 
 namespace UnityUtility
 {
-    public class InspectorsWindow : EditorWindow
+    public class InspectorsWindow : BaseWindow
     {
         ObjectNameComparer comparer;
         GUIStyle nameStyle;
@@ -64,37 +64,37 @@ namespace UnityUtility
 
             // HEADER
 
-            EditorGUILayout.BeginScrollView(new Vector2(scroll.x, 0), false, false, new GUIStyle(), new GUIStyle(), new GUIStyle());
-
-            GUILayout.BeginHorizontal();
-
-            foreach (var item in Selected)
-                GUILayout.Label(item.name, EditorStyles.whiteLabel, GUILayout.Width(350));
-
-            GUILayout.EndHorizontal();
-            EditorGUILayout.EndScrollView();
+            ScrollNoBars(new Vector2(scroll.x, 0), () => 
+            {
+                Horizontal()(()=>
+                {
+                    foreach (var item in Selected)
+                        GUILayout.Label(item.name, EditorStyles.whiteLabel, GUILayout.Width(350));
+                });
+            });
 
             // INSPECTORS
 
-            scroll = EditorGUILayout.BeginScrollView(scroll);
-            GUILayout.BeginHorizontal();
-
-            for (var i = 0; i < Selected.Length; i++)
+            scroll = Scroll(scroll, () => 
             {
-                var item = Selected[i];
+                Horizontal()(() =>
+                {
+                    for (var i = 0; i < Selected.Length; i++)
+                    {
+                        var item = Selected[i];
 
-                Profiler.BeginSample("InspectorsWindow.Draw(): Item: " + item.name);
-                GUILayout.BeginVertical(GUILayout.Width(350));
+                        Profiler.BeginSample("InspectorsWindow.Draw(): Item: " + item.name);
 
-                Editor.CreateEditor(item).OnInspectorGUI(); // TODO: cache
+                        Vertical(350, () =>
+                        {
+                            Editor.CreateEditor(item).OnInspectorGUI(); // TODO: cache
+                            GUILayout.FlexibleSpace();
+                        });
 
-                GUILayout.FlexibleSpace();
-                GUILayout.EndVertical();
-                Profiler.EndSample();
-            }
-
-            GUILayout.EndHorizontal();
-            EditorGUILayout.EndScrollView();
+                        Profiler.EndSample();
+                    }
+                });
+            });
         }
 
         class ObjectNameComparer : IComparer<Object>

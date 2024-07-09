@@ -74,6 +74,22 @@ namespace UnityUtility
             EditorGUILayout.EndScrollView();
         }
 
+        protected Vector2 Scroll(Vector2 scroll, Action callback)
+        {
+            scroll = EditorGUILayout.BeginScrollView(scroll);
+            callback();
+            EditorGUILayout.EndScrollView();
+            return scroll;
+        }
+
+        protected Vector2 ScrollNoBars(Vector2 scroll, Action callback)
+        {
+            scroll = EditorGUILayout.BeginScrollView(scroll, false, false, GUIStyle.none, GUIStyle.none, GUIStyle.none);
+            callback();
+            EditorGUILayout.EndScrollView();
+            return scroll;
+        }
+
         protected void VerticalScroll(Action callback)
         {
             Scroll(() => 
@@ -93,6 +109,18 @@ namespace UnityUtility
                 return GUILayout.Button(name);
             else
                 return GUILayout.Button(name, GUILayout.Width(width));
+        }
+
+        public static void PingButton(UnityEngine.Object obj, float width = 0)
+        {
+            GUI.skin.button.alignment = TextAnchor.MiddleLeft;
+
+            if (width == 0
+                ? GUILayout.Button(obj.name) 
+                : GUILayout.Button(obj.name, GUILayout.Width(width)))
+            {
+                EditorGUIUtility.PingObject(obj);
+            }
         }
 
         // STYLE
