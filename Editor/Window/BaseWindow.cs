@@ -111,7 +111,7 @@ namespace UnityUtility
                 return GUILayout.Button(name, GUILayout.Width(width));
         }
 
-        public static void PingButton(UnityEngine.Object obj, float width = 0)
+        public static bool PingButton(UnityEngine.Object obj, float width = 0)
         {
             GUI.skin.button.alignment = TextAnchor.MiddleLeft;
 
@@ -120,7 +120,10 @@ namespace UnityUtility
                 : GUILayout.Button(obj.name, GUILayout.Width(width)))
             {
                 EditorGUIUtility.PingObject(obj);
+                return true;
             }
+
+            return false;
         }
 
         // STYLE
