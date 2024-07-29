@@ -135,12 +135,8 @@ namespace UnityUtility
 
         // CHANGE CHECK
 
-        public static bool ChangeCheck(Action callback1)
-        {
-            EditorGUI.BeginChangeCheck();
-            callback1();
-            return EditorGUI.EndChangeCheck();
-        }
+        public static bool ChangeCheck(Action callback)
+            => BaseEditor.ChangeCheck(callback);
 
         // DIRTY
 
