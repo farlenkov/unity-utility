@@ -28,5 +28,30 @@ namespace UnityUtility
         {
             return EditorUtility.IsDirty(target);
         }
+
+        // BUTTON
+
+        public static bool Button(string name, float width = 0)
+        {
+            if (width == 0)
+                return GUILayout.Button(name);
+            else
+                return GUILayout.Button(name, GUILayout.Width(width));
+        }
+
+        public static bool PingButton(UnityEngine.Object obj, float width = 0)
+        {
+            GUI.skin.button.alignment = TextAnchor.MiddleLeft;
+
+            if (width == 0
+                ? GUILayout.Button(obj.name) 
+                : GUILayout.Button(obj.name, GUILayout.Width(width)))
+            {
+                EditorGUIUtility.PingObject(obj);
+                return true;
+            }
+
+            return false;
+        }
     }
 }
