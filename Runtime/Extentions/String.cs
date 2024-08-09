@@ -91,5 +91,20 @@ namespace UnityUtility
             var bytes = Convert.FromBase64String(base64String);
             return Encoding.UTF8.GetString(bytes);
         }
+    
+        public static string ToMD5(this string originalString)
+        {
+            if (string.IsNullOrEmpty(originalString))
+                return null;
+
+            var md5 = MD5.Create();
+            var result = md5.ComputeHash(Encoding.Default.GetBytes(originalString));
+            var strBuilder = new StringBuilder();
+
+            for (int i = 0; i < result.Length; i++)
+                strBuilder.Append(result[i].ToString("x2"));
+
+            return strBuilder.ToString();
+        }
     }
 }
