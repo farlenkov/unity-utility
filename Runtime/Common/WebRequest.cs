@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
+using System.Net.Http;
 
 namespace UnityUtility
 {
@@ -18,7 +19,7 @@ namespace UnityUtility
             }
         }
 
-        public static async UniTask<string> Post<REQ>(
+        public static async UniTask<string> PostAndRead<REQ>(
             string url, 
             REQ request, 
             string contentType = "application/json")
@@ -52,7 +53,7 @@ namespace UnityUtility
             }
         }
 
-        public static async UniTask<string> Post<REQ>(
+        public static async UniTask<HttpResponseMessage> Post<REQ>(
             string url, 
             REQ bodyData, 
             string contentType = "application/json")
@@ -69,17 +70,26 @@ namespace UnityUtility
                     contentType);
 
                 var resp = await client.PostAsync(url, httpContent);
+                return resp;
+            }
+        }
 
-                if (resp.IsSuccessStatusCode)
-                {
-                    var data = await resp.Content.ReadAsStringAsync();
-                    return data;
-                }
-                else
-                {
-                    Log.Error($"[WebRequest: Post] {(int)resp.StatusCode}: {resp.ReasonPhrase}");
-                    return null;
-                }
+        public static async UniTask<string> PostAndRead<REQ>(
+            string url, 
+            REQ bodyData, 
+            string contentType = "application/json")
+        {
+            var resp = await Post(url, bodyData, contentType);
+
+            if (resp.IsSuccessStatusCode)
+            {
+                var data = await resp.Content.ReadAsStringAsync();
+                return data;
+            }
+            else
+            {
+                Log.Error($"[WebRequest: Post] {(int)resp.StatusCode}: {resp.ReasonPhrase}");
+                return null;
             }
         }
 
@@ -106,7 +116,7 @@ namespace UnityUtility
 
         public static async UniTask<RESP> Post<REQ, RESP>(string url, REQ request)
         {
-            var json = await Post(url, request);
+            var json = await PostAndRead(url, request);
             return JsonConvert.DeserializeObject<RESP>(json);
         }
     }
