@@ -7,6 +7,10 @@ namespace UnityUtility
 {
     public class WebRequest
     {
+        static JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        };
 
 #if UNITY_2017_1_OR_NEWER
 
@@ -24,7 +28,7 @@ namespace UnityUtility
             REQ request, 
             string contentType = "application/json")
         {
-            var requestString = JsonConvert.SerializeObject(request);
+            var requestString = JsonConvert.SerializeObject(request, SerializerSettings);
 
             using (var req = UnityEngine.Networking.UnityWebRequest.Post(url, requestString, contentType))
             {
@@ -60,7 +64,7 @@ namespace UnityUtility
         {
             var body = bodyData is string bodyStr
                 ? bodyStr
-                : JsonConvert.SerializeObject(bodyData);
+                : JsonConvert.SerializeObject(bodyData, SerializerSettings);
 
             using (var client = new System.Net.Http.HttpClient())
             {
