@@ -8,14 +8,16 @@ namespace UnityUtility
 {
     public class WebRequest
     {
-        static JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
+        public static JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore
         };
 
 #if UNITY_2017_1_OR_NEWER
 
-        public static async UniTask<string> Get(string url)
+        public static async UniTask<string> Get(
+            string url, 
+            CancellationToken cancellationToken)
         {
             using (var req = UnityEngine.Networking.UnityWebRequest.Get(url))
             {
@@ -27,6 +29,7 @@ namespace UnityUtility
         public static async UniTask<string> PostAndRead<REQ>(
             string url, 
             REQ request, 
+            CancellationToken cancellationToken,
             string contentType = "application/json")
         {
             var requestString = JsonConvert.SerializeObject(request, SerializerSettings);
