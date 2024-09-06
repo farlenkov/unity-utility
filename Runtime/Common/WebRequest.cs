@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
+using System.Threading;
 
 namespace UnityUtility
 {
@@ -38,11 +39,13 @@ namespace UnityUtility
         }
 #else
 
-        public static async UniTask<string> Get(string url)
+        public static async UniTask<string> Get(
+            string url, 
+            CancellationToken cancellationToken)
         {
             using (var client = new System.Net.Http.HttpClient())
             {
-                var resp = await client.GetAsync(url);
+                var resp = await client.GetAsync(url, cancellationToken);
 
                 if (resp.IsSuccessStatusCode)
                 {
@@ -60,6 +63,7 @@ namespace UnityUtility
         public static async UniTask<HttpResponseMessage> Post<REQ>(
             string url, 
             REQ bodyData, 
+            CancellationToken cancellationToken,
             string contentType = "application/json")
         {
             var body = bodyData is string bodyStr
@@ -73,7 +77,7 @@ namespace UnityUtility
                     System.Text.Encoding.UTF8,
                     contentType);
 
-                var resp = await client.PostAsync(url, httpContent);
+                var resp = await client.PostAsync(url, httpContent, cancellationToken);
                 return resp;
             }
         }
@@ -81,9 +85,10 @@ namespace UnityUtility
         public static async UniTask<string> PostAndRead<REQ>(
             string url, 
             REQ bodyData, 
+            CancellationToken cancellationToken,
             string contentType = "application/json")
         {
-            var resp = await Post(url, bodyData, contentType);
+            var resp = await Post(url, bodyData, cancellationToken, contentType);
 
             if (resp.IsSuccessStatusCode)
             {
@@ -99,9 +104,12 @@ namespace UnityUtility
 
 #endif
 
-        public static async UniTask<RESP> Get<RESP>(string url, bool tryCatch = false)
+        public static async UniTask<RESP> Get<RESP>(
+            string url, 
+            CancellationToken cancellationToken,
+            bool tryCatch = false)
         {
-            var json = await Get(url);
+            var json = await Get(url, cancellationToken);
 
             if (!tryCatch)
                 return JsonConvert.DeserializeObject<RESP>(json);
@@ -118,9 +126,12 @@ namespace UnityUtility
             }
         }
 
-        public static async UniTask<RESP> Post<REQ, RESP>(string url, REQ request)
+        public static async UniTask<RESP> Post<REQ, RESP>(
+            string url, 
+            REQ request,
+            CancellationToken cancellationToken)
         {
-            var json = await PostAndRead(url, request);
+            var json = await PostAndRead(url, request, cancellationToken);
             return JsonConvert.DeserializeObject<RESP>(json);
         }
     }
