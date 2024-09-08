@@ -13,7 +13,21 @@ namespace UnityUtility
 
         public static string stringify<T>(T obj, bool formatting = false)
         {
-            return JsonConvert.SerializeObject(obj, formatting ? Formatting.Indented : Formatting.None);
+            return JsonConvert.SerializeObject(obj, formatting 
+                ? FormattingNone 
+                : FormattingNone);
         }
+
+        public static JsonSerializerSettings FormattingNone = new ()
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.None
+        };
+
+        public static JsonSerializerSettings FormattingIndented = new ()
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented
+        };
     }
 }
