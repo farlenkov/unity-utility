@@ -17,7 +17,9 @@ namespace UnityUtility
             return builder;
         }
 
-        public static string Release(this StringBuilder stringBuilder, bool returnContent = true)
+        public static string Release(
+            this StringBuilder stringBuilder, 
+            bool returnContent = true)
         {
             var content = returnContent ? stringBuilder.ToString() : default;
             stringBuilder.Clear();
