@@ -14,7 +14,7 @@ namespace UnityUtility
         public static string stringify<T>(T obj, bool formatting = false)
         {
             return JsonConvert.SerializeObject(obj, formatting 
-                ? FormattingNone 
+                ? FormattingIndented 
                 : FormattingNone);
         }
 
