@@ -56,6 +56,11 @@ namespace UnityUtility
             };
         }
 
+        protected GUILayoutOption Width(float width)
+        {
+            return GUILayout.Width(width);
+        }
+
         // SCROLL
 
         Queue<Vector2> ScrollQueue = new ();
@@ -120,6 +125,9 @@ namespace UnityUtility
 
         public static bool ChangeCheck(Action callback)
             => BaseEditor.ChangeCheck(callback);
+            
+        public static bool ChangeCheck(UnityEngine.Object obj, Action callback)
+            => BaseEditor.ChangeCheck(obj, callback);
 
         // DIRTY
 

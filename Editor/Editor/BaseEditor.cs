@@ -16,6 +16,19 @@ namespace UnityUtility
             callback();
             return EditorGUI.EndChangeCheck();
         }
+        
+        public static bool ChangeCheck(UnityEngine.Object obj, Action callback)
+        {
+            EditorGUI.BeginChangeCheck();
+            callback();
+
+            var isChanged = EditorGUI.EndChangeCheck();
+
+            if (isChanged)
+                SetDirty(obj);
+
+            return isChanged;
+        }
 
         // DIRTY
 
