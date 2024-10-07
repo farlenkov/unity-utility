@@ -6,9 +6,9 @@ namespace UnityUtility
 {
     public static class LocalConfigLoader
     {
-        public static T Load<T>(string fileName = "LocalConfig.json")
+        public static T Load<T>(string rootPath, string fileName)
         {
-            if (!FindFileInParent.Exec(fileName, out var configPath))
+            if (!FindFileInParent.Exec(rootPath, fileName, out var configPath))
             {
                 Log.Error("File not found: '{0}'", fileName);
                 return default;
