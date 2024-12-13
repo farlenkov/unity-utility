@@ -1,5 +1,5 @@
+using CoreUtils;
 using Cysharp.Threading.Tasks;
-using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading;
@@ -8,10 +8,6 @@ namespace UnityUtility
 {
     public class WebRequest
     {
-        public static JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore
-        };
 
 #if UNITY_2017_1_OR_NEWER
 
@@ -46,7 +42,7 @@ namespace UnityUtility
             string url, 
             CancellationToken cancellationToken)
         {
-            using (var client = new System.Net.Http.HttpClient())
+            using (var client = new HttpClient())
             {
                 var resp = await client.GetAsync(url, cancellationToken);
 
@@ -71,7 +67,7 @@ namespace UnityUtility
         {
             var body = bodyData is string bodyStr
                 ? bodyStr
-                : JsonConvert.SerializeObject(bodyData, SerializerSettings);
+                : JSON.stringify(bodyData);
 
             using (var client = new System.Net.Http.HttpClient())
             {
@@ -112,14 +108,14 @@ namespace UnityUtility
             CancellationToken cancellationToken,
             bool tryCatch = false)
         {
-            var json = await Get(url, cancellationToken);
+            var (json, err) = await Get(url, cancellationToken).Catch(true);
 
             if (!tryCatch)
-                return JsonConvert.DeserializeObject<RESP>(json);
+                return JSON.parse<RESP>(json);
 
             try
             {
-                return JsonConvert.DeserializeObject<RESP>(json);
+                return JSON.parse<RESP>(json);
             }
             catch (Exception ex)
             {
@@ -135,7 +131,7 @@ namespace UnityUtility
             CancellationToken cancellationToken)
         {
             var json = await PostAndRead(url, request, cancellationToken);
-            return JsonConvert.DeserializeObject<RESP>(json);
+            return JSON.parse<RESP>(json);
         }
     }
 }
