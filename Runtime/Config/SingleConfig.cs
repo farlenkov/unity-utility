@@ -1,7 +1,7 @@
 #if UNITY_2017_1_OR_NEWER
 
+using CoreUtils;
 using UnityEngine;
-using UnityUtility;
 
 namespace UnityConfig
 {

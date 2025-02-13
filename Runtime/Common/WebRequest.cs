@@ -1,5 +1,6 @@
 using CoreUtils;
 using Cysharp.Threading.Tasks;
+using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading;
@@ -28,7 +29,7 @@ namespace UnityUtility
             CancellationToken cancellationToken,
             string contentType = "application/json")
         {
-            var requestString = JsonConvert.SerializeObject(request, SerializerSettings);
+            var requestString = JSON.stringify(request); // JsonConvert.SerializeObject(request, SerializerSettings);
 
             using (var req = UnityEngine.Networking.UnityWebRequest.Post(url, requestString, contentType))
             {

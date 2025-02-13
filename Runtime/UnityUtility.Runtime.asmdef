@@ -2,7 +2,8 @@
     "name": "UnityUtility.Runtime",
     "rootNamespace": "UnityUtility",
     "references": [
-        "UniTask"
+        "UniTask",
+        "CoreUtils.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
