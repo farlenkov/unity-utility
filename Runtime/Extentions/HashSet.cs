@@ -11,5 +11,11 @@ namespace UnityUtility
             if (!list.Contains(value))
                 list.Add(value);
         }
+        
+        public static void TryRemove<V>(this HashSet<V> list, V value)
+        {
+            if (list.Contains(value))
+                list.Remove(value);
+        }
     }
 }
